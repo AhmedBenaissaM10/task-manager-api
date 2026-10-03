@@ -1,11 +1,17 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Task } from "../../tasks/entities/task.entity.js";
 @Entity('projects')
 export class Project {
-    @PrimaryGeneratedColumn()
-    id: number;
-    @Column()
-    name: string;
-    @Column()
-    description: string;
+  @PrimaryGeneratedColumn()
+  id: number;
+  @Column({ length: 100 })
+  name: string;
+  @Column({ type: 'text', nullable: true })
+  description: string | null;
+  @OneToMany(() => Task, (task) => task.project)
+  tasks: Task[];
+  @CreateDateColumn()
+  createdAt: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

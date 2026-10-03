@@ -1,16 +1,31 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Project } from "../../projects/entities/project.entity.js";
 
-type Status = 'pending' | 'in_progress' | 'completed';
+export enum TaskStatus {
+  TODO = 'todo',
+  IN_PROGRESS = 'in_progress',
+  DONE = 'done',
+}
 @Entity('tasks')
 export class Task {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column()
+  @Column({ length: 150 })
   title: string;
-  @Column()
-  status: Status;
-  @Column()
-  dueDate: Date;
-  @Column()
-  projectId: string;
+  @Column({ type: 'enum', enum: TaskStatus, default: TaskStatus.TODO })
+  status: TaskStatus;
+  @Column({ type: 'timestamp', nullable: true })
+  dueDate: Date | null;
+  @ManyToOne(() => Project, (project) => project.tasks, {
+    onDelete: 'CASCADE',
+    nullable: false,
+  })
+  @JoinColumn({ name: 'project_id' })
+  project: Project;
+  @Column({ name: 'project_id' })
+  projectId: number;
+  @CreateDateColumn()
+  createdAt: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
 }
