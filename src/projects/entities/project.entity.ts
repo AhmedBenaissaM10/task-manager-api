@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import type { Relation } from 'typeorm';
 import { Task } from "../../tasks/entities/task.entity.js";
 @Entity('projects')
 export class Project {
@@ -9,7 +10,7 @@ export class Project {
   @Column({ type: 'text', nullable: true })
   description: string | null;
   @OneToMany(() => Task, (task) => task.project)
-  tasks: Task[];
+  tasks: Relation<Task[]>;
   @CreateDateColumn()
   createdAt: Date;
   @UpdateDateColumn()

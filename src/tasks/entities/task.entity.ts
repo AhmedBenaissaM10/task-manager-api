@@ -1,5 +1,14 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { Project } from "../../projects/entities/project.entity.js";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import type { Relation } from 'typeorm';
+import { Project } from '../../projects/entities/project.entity.js';
 
 export enum TaskStatus {
   TODO = 'todo',
@@ -21,7 +30,7 @@ export class Task {
     nullable: false,
   })
   @JoinColumn({ name: 'project_id' })
-  project: Project;
+  project: Relation<Project>;
   @Column({ name: 'project_id' })
   projectId: number;
   @CreateDateColumn()
