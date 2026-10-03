@@ -8,7 +8,8 @@ import { Project } from './entities/project.entity.js';
 @Injectable()
 export class ProjectsService {
   constructor(
-    @InjectRepository(Project) private readonly projectRepository: Repository<Project>,
+    @InjectRepository(Project)
+    private readonly projectRepository: Repository<Project>,
   ) {}
 
   create(dto: CreateProjectDto) {
@@ -21,7 +22,10 @@ export class ProjectsService {
   }
 
   async findOne(id: number) {
-    const project = await this.projectRepository.findOne({ where: { id }, relations: { tasks: true } });
+    const project = await this.projectRepository.findOne({
+      where: { id },
+      relations: { tasks: true },
+    });
     if (!project) {
       throw new NotFoundException(`Project with ID ${id} not found`);
     }

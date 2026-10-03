@@ -1,6 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import type { Relation } from 'typeorm';
-import { Task } from "../../tasks/entities/task.entity.js";
+import { Task } from '../../tasks/entities/task.entity.js';
 @Entity('projects')
 export class Project {
   @PrimaryGeneratedColumn()
