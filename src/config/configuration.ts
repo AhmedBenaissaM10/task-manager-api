@@ -1,10 +1,18 @@
-export default () => ({
-  port: parseInt(process.env.PORT ?? '', 10) || 3000,
-  database: {
-    host: process.env.DB_HOST,
-    port: parseInt(process.env.DB_PORT ?? '', 10) || 5432,
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-  },
-});
+// src/config/configuration.ts
+import { envSchema } from './env.schema.js';
+
+export default () => {
+  const env = envSchema.parse(process.env);
+
+  return {
+    NODE_ENV: env.NODE_ENV,
+    port: env.PORT,
+    database: {
+      host: env.DB_HOST,
+      port: env.DB_PORT,
+      username: env.DB_USERNAME,
+      password: env.DB_PASSWORD,
+      database: env.DB_NAME,
+    },
+  };
+};
