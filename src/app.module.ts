@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { createObserveModule } from '@nestjs/observe';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProjectsModule } from './projects/projects.module.js';
 import { TasksModule } from './tasks/tasks.module.js';
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
@@ -17,7 +17,6 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
       password: 'postgres',
       database: 'mydatabase',
       autoLoadEntities: true,
-      entities: [],
       synchronize: true,
     }),
     ProjectsModule,
