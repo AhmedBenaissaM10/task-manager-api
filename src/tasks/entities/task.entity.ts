@@ -3,13 +3,15 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import type { Relation } from 'typeorm';
 import { Project } from '../../projects/entities/project.entity.js';
-
+import { Tag } from '../../tags/entities/tag.entity.js';
 export enum TaskStatus {
   TODO = 'todo',
   IN_PROGRESS = 'in_progress',
@@ -33,6 +35,10 @@ export class Task {
   project: Relation<Project>;
   @Column({ name: 'project_id' })
   projectId: number;
+  @ManyToMany(() => Tag, (tag) => tag.tasks)
+  @JoinTable({ name: 'task_tag' })
+  tags: Relation<Tag>[];
+
   @CreateDateColumn()
   createdAt: Date;
   @UpdateDateColumn()
